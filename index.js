@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const UserModel = require("./models/UserModel");
 const ChatsModel = require("./models/ChatModel");
+const MessagesModel = require("./models/MessageModel");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { json } = require("body-parser");
@@ -42,6 +43,21 @@ app.get("/getAllChats", (req, res) => {
 app.post("/createNewChat", (req, res) => {
   let create = new ChatsModel(req.body);
   create.save().then((result) => res.send(result));
+});
+
+app.post("/sendMessage", (req, res) => {
+  let create = new MessagesModel(req.body);
+  create.save().then((result) => {
+    res.send(result);
+  });
+
+  console.log(req.body);
+});
+
+app.get("/getAllMesaages", (req, res) => {
+  MessagesModel.find().then((result) => {
+    res.send(result);
+  });
 });
 
 app.listen(3005, () => {

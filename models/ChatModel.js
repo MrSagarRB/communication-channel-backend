@@ -5,6 +5,9 @@ const ChatSchema = new mongoose.Schema(
     users: {
       type: Array,
     },
+    messages: {
+      type: Array,
+    },
   },
 
   { timestaps: true }

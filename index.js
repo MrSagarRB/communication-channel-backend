@@ -45,13 +45,19 @@ app.post("/createNewChat", (req, res) => {
   create.save().then((result) => res.send(result));
 });
 
-app.post("/sendMessage", (req, res) => {
-  let create = new MessagesModel(req.body);
-  create.save().then((result) => {
-    res.send(result);
-  });
-
+app.post("/sendMessage", async (req, res) => {
   console.log(req.body);
+
+  await ChatsModel.updateOne(
+    { _id: req.body.id },
+    {
+      $push: {
+        messages: { text: req.body.message, senderId: req.body.senderID },
+      },
+    }
+  );
+
+  res.send(req.body);
 });
 
 app.get("/getAllMesaages", (req, res) => {

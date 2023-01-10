@@ -23,8 +23,8 @@ app.get("/", (req, res) => {
   res.send("Server is running...");
 });
 
-app.get("/getAllUser", (req, res) => {
-  UserModel.find().then((result) => {
+app.get("/getAllUser", async (req, res) => {
+  await UserModel.find().then((result) => {
     res.send(result);
   });
 });

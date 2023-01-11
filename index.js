@@ -34,6 +34,12 @@ app.post("/createUser", (req, res) => {
   create.save().then((result) => res.send(result));
 });
 
+app.post("/login", async (req, res) => {
+  await UserModel.find({ email: req.body.email }).then((result) => {
+    res.send(result);
+  });
+});
+
 app.get("/getAllChats", (req, res) => {
   ChatsModel.find().then((result) => {
     res.send(result);

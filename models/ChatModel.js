@@ -8,6 +8,10 @@ const ChatSchema = new mongoose.Schema(
     messages: {
       type: Array,
     },
+    members: {
+      type: Array,
+    },
+    admin: String,
   },
 
   { timestaps: true }

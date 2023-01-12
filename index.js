@@ -40,10 +40,14 @@ app.post("/login", async (req, res) => {
   });
 });
 
-app.get("/getAllChats", (req, res) => {
-  ChatsModel.find().then((result) => {
+app.get("/getAllChats", async (req, res) => {
+  await ChatsModel.find().then((result) => {
     res.send(result);
   });
+});
+
+app.post("/findChatByID", (req, res) => {
+  ChatsModel.find(req.body).then((result) => res.send(result));
 });
 
 app.post("/createNewChat", (req, res) => {

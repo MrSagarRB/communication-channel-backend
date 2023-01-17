@@ -51,6 +51,9 @@ app.post("/findChatByID", (req, res) => {
 });
 
 app.post("/createNewChat", (req, res) => {
+  console.log(req.body);
+  // res.send(req.body);
+
   let create = new ChatsModel(req.body);
   create.save().then((result) => res.send(result));
 });

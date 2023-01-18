@@ -29,6 +29,13 @@ app.get("/getAllUser", async (req, res) => {
   });
 });
 
+app.post("/getUserByID", async (req, res) => {
+  await UserModel.find({ _id: req.body.token }).then((result) => {
+    console.log(req.body.token);
+    res.send(result);
+  });
+});
+
 app.post("/createUser", (req, res) => {
   let create = new UserModel(req.body);
   create.save().then((result) => res.send(result));

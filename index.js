@@ -72,7 +72,11 @@ app.post("/sendMessage", async (req, res) => {
     { _id: req.body.id },
     {
       $push: {
-        messages: { text: req.body.message, senderId: req.body.senderID },
+        messages: {
+          text: req.body.message,
+          senderId: req.body.senderID,
+          time: req.body.time,
+        },
       },
     }
   );

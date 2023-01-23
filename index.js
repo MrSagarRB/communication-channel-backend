@@ -7,9 +7,22 @@ const MessagesModel = require("./models/MessageModel");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { json } = require("body-parser");
-
+const http = require("http");
+const { Server } = require("socket.io");
+const server = http.createServer(app);
 app.use(cors());
 app.use(bodyParser.json());
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://192.168.1.101:3000",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (data) => {
+  // console.log(data);
+});
 
 const onlineUsers = [];
 
@@ -22,15 +35,9 @@ mongoose.connect(
 );
 
 // Socket
-const io = require("socket.io")(8900, {
-  cors: {
-    origin: "https://communication-channel2.vercel.app",
-  },
-});
 
 io.on("connection", (socket) => {
-  //when ceonnect
-
+  // user loggeed
   socket.on("user_online", (data) => {
     if (onlineUsers.includes(data)) {
     } else {
@@ -38,9 +45,17 @@ io.on("connection", (socket) => {
     }
   });
 
-  socket.on("sendMsg", (data) => {
+  // user logged out
+  socket.on("user_offline", (data) => {
+    onlineUsers.pop(data);
     console.log(data);
+  });
+
+  // send msg
+
+  socket.on("sendMsg", (data) => {
     socket.broadcast.emit("receive_msg", data);
+    console.log(data);
   });
 });
 
@@ -115,6 +130,6 @@ app.get("/getAllMesaages", (req, res) => {
   });
 });
 
-app.listen(3005, () => {
+server.listen(3005, () => {
   console.log("Server is Running on port 3005");
 });

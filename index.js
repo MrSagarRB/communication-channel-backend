@@ -51,7 +51,7 @@ io.on("connection", (socket) => {
     console.log(data);
   });
 
-  // send msg
+  // send massage
 
   socket.on("sendMsg", (data) => {
     socket.broadcast.emit("receive_msg", data);

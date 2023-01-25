@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 const io = new Server(server, {
   cors: {
-    origin: "http://ec2-54-242-192-87.compute-1.amazonaws.com",
+    origin: "http://192.168.1.101:3000",
     methods: ["GET", "POST"],
   },
 });
@@ -28,32 +28,6 @@ mongoose.connect(
     useNewUrlParser: true,
   }
 );
-
-// Socket
-
-io.on("connection", (socket) => {
-  // user loggeed
-  console.log(socket.id);
-  socket.on("user_online", (data) => {
-    if (onlineUsers.includes(data)) {
-    } else {
-      onlineUsers.push(data);
-    }
-  });
-
-  // user logged out
-  socket.on("user_offline", (data) => {
-    onlineUsers.pop(data);
-    console.log(data);
-  });
-
-  // send massage
-
-  socket.on("sendMsg", (data) => {
-    socket.broadcast.emit("receive_msg", data);
-    console.log(data);
-  });
-});
 
 app.get("/api", (req, res) => {
   res.send("Server is running...");

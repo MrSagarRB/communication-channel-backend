@@ -58,11 +58,11 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get("/", (req, res) => {
+app.get("/api", (req, res) => {
   res.send("Server is running...");
 });
 
-app.get("/getOnlineUsers", (req, res) => {
+app.get("/api/getOnlineUsers", (req, res) => {
   res.send(onlineUsers);
 });
 
@@ -72,41 +72,41 @@ app.get("/getAllUser", async (req, res) => {
   });
 });
 
-app.post("/getUserByID", async (req, res) => {
+app.post("/api/getUserByID", async (req, res) => {
   await UserModel.find({ _id: req.body.token }).then((result) => {
     res.send(result);
   });
 });
 
-app.post("/createUser", (req, res) => {
+app.post("/api/createUser", (req, res) => {
   let create = new UserModel(req.body);
   create.save().then((result) => res.send(result));
 });
 
-app.post("/login", async (req, res) => {
+app.post("/api/login", async (req, res) => {
   await UserModel.find({ email: req.body.email }).then((result) => {
     res.send(result);
   });
 });
 
-app.get("/getAllChats", async (req, res) => {
+app.get("/api/getAllChats", async (req, res) => {
   await ChatsModel.find().then((result) => {
     res.send(result);
   });
 });
 
-app.post("/findChatByID", (req, res) => {
+app.post("/api/findChatByID", (req, res) => {
   ChatsModel.find(req.body).then((result) => res.send(result));
 });
 
-app.post("/createNewChat", (req, res) => {
+app.post("/api/createNewChat", (req, res) => {
   // res.send(req.body);
 
   let create = new ChatsModel(req.body);
   create.save().then((result) => res.send(result));
 });
 
-app.post("/sendMessage", async (req, res) => {
+app.post("/api/sendMessage", async (req, res) => {
   await ChatsModel.updateOne(
     { _id: req.body.id },
     {
@@ -123,7 +123,7 @@ app.post("/sendMessage", async (req, res) => {
   res.send(req.body);
 });
 
-app.get("/getAllMesaages", (req, res) => {
+app.get("/api/getAllMesaages", (req, res) => {
   MessagesModel.find().then((result) => {
     res.send(result);
   });

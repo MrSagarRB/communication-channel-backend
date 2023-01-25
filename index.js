@@ -14,7 +14,7 @@ app.use(bodyParser.json());
 
 const io = new Server(server, {
   cors: {
-    origin: "http://192.168.1.101:3000",
+    origin: "http://ec2-54-242-192-87.compute-1.amazonaws.com",
     methods: ["GET", "POST"],
   },
 });

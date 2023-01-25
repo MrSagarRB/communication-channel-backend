@@ -19,10 +19,6 @@ const io = new Server(server, {
   },
 });
 
-io.on("connection", (data) => {
-  // console.log(data);
-});
-
 const onlineUsers = [];
 
 // Database Connection
@@ -37,6 +33,7 @@ mongoose.connect(
 
 io.on("connection", (socket) => {
   // user loggeed
+  console.log(socket.id);
   socket.on("user_online", (data) => {
     if (onlineUsers.includes(data)) {
     } else {
@@ -66,7 +63,7 @@ app.get("/api/getOnlineUsers", (req, res) => {
   res.send(onlineUsers);
 });
 
-app.get("/getAllUser", async (req, res) => {
+app.get("/api/getAllUsers", async (req, res) => {
   await UserModel.find().then((result) => {
     res.send(result);
   });

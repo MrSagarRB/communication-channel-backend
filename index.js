@@ -3,7 +3,6 @@ const app = express();
 const mongoose = require("mongoose");
 const UserModel = require("./models/UserModel");
 const ChatsModel = require("./models/ChatModel");
-const MessagesModel = require("./models/MessageModel");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const { json } = require("body-parser");

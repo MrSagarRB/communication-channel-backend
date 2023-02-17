@@ -17,7 +17,7 @@ app.use("/uploads", express.static("uploads"));
 
 const io = new Server(server, {
   cors: {
-    origin: "https://chat.miratsoneservices.com/",
+    origin: "http://192.168.1.101:3000",
     methods: ["GET", "POST"],
   },
 });
@@ -38,8 +38,8 @@ const upload = multer({ dest: "uploads/" });
 
 io.on("connection", (socket) => {
   socket.on("setup", (loggedUser) => {
-    console.log("User ID " + loggedUser._id + " Sokcet ID " + socket.id);
-    socket.join(loggedUser._id);
+    // console.log("User ID " + loggedUser._id + " Sokcet ID " + socket.id);
+    // socket.join(loggedUser._id);
     socket.emit("connected");
   });
 
@@ -57,7 +57,7 @@ io.on("connection", (socket) => {
 });
 
 app.get("/api", (req, res) => {
-  res.send("Server is running...");
+  res.send("req");
 });
 
 app.post("/api/uploadFile", upload.single("avatar"), (req, res) => {
@@ -136,6 +136,7 @@ app.post("/api/sendMessage", async (req, res) => {
           time: req.body.time,
         },
       },
+      updatedAt: Date.now(),
     }
   );
 
